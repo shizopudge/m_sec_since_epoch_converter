@@ -17,7 +17,7 @@ class SecondConverter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var dateFormat = DateFormat('EEEE, d, MMMM, yyyy');
+    var dateFormat = DateFormat('EEEE');
     bool themeMode =
         ref.watch(themeNotifierProvider.notifier).mode == ThemeMode.dark;
     int yearValue = ref.watch(yearValueStateProvider);
@@ -39,12 +39,8 @@ class SecondConverter extends ConsumerWidget {
     TextEditingController enteredMSSEController = TextEditingController(
         text: ref.watch(enteredMSSEValueStateProvider).toString());
     TextEditingController convertedMSSEController = TextEditingController(
-      text: dateFormat.format(ref.watch(convertedDateTECValueStateProvider)) +
-          ', ' +
-          ref.watch(convertedDateTECValueStateProvider).hour.toString() +
-          ':' +
-          ref.watch(convertedDateTECValueStateProvider).minute.toString(),
-    );
+        text:
+            '${dateFormat.format(ref.watch(convertedDateTECValueStateProvider))},  ${ref.watch(convertedDateTECValueStateProvider).toLocal()}');
     ScrollController scrollController =
         ScrollController(initialScrollOffset: 0.0);
     return Responsive(
