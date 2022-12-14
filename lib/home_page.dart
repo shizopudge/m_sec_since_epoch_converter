@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:m_sec_since_epoch_converter/first_converter.dart';
 import 'package:m_sec_since_epoch_converter/seconds_converter.dart';
 import 'package:m_sec_since_epoch_converter/theme.dart';
@@ -37,8 +36,6 @@ class HomePage extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
 }
-
-var dateFormat = DateFormat('EEEE, d, MMMM, yyyy, kk:mm');
 
 class _HomePageState extends ConsumerState<HomePage> {
   void toggleTheme() {

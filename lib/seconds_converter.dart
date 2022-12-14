@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:m_sec_since_epoch_converter/home_page.dart';
 import 'package:m_sec_since_epoch_converter/responsive.dart';
 import 'package:m_sec_since_epoch_converter/theme.dart';
@@ -16,6 +17,7 @@ class SecondConverter extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var dateFormat = DateFormat('EEEE, d, MMMM, yyyy');
     bool themeMode =
         ref.watch(themeNotifierProvider.notifier).mode == ThemeMode.dark;
     int yearValue = ref.watch(yearValueStateProvider);
@@ -37,9 +39,11 @@ class SecondConverter extends ConsumerWidget {
     TextEditingController enteredMSSEController = TextEditingController(
         text: ref.watch(enteredMSSEValueStateProvider).toString());
     TextEditingController convertedMSSEController = TextEditingController(
-      text: dateFormat.format(
-        ref.watch(convertedDateTECValueStateProvider),
-      ),
+      text: dateFormat.format(ref.watch(convertedDateTECValueStateProvider)) +
+          ', ' +
+          ref.watch(convertedDateTECValueStateProvider).hour.toString() +
+          ':' +
+          ref.watch(convertedDateTECValueStateProvider).minute.toString(),
     );
     ScrollController scrollController =
         ScrollController(initialScrollOffset: 0.0);
@@ -152,7 +156,6 @@ class SecondConverter extends ConsumerWidget {
                           },
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly,
                             TextInputFormatter.withFunction(
                                 (oldValue, newValue) {
                               if (newValue.text == '') {
@@ -166,9 +169,9 @@ class SecondConverter extends ConsumerWidget {
                                     selection: const TextSelection.collapsed(
                                         offset: 2));
                               }
-                              if (i < 0) {
+                              if (i < -864000000000000) {
                                 return newValue.copyWith(
-                                    text: '0',
+                                    text: '-864000000000000',
                                     selection: const TextSelection.collapsed(
                                         offset: 2));
                               }
